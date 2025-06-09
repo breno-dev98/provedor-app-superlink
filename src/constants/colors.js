@@ -1,0 +1,42 @@
+export const colors = {
+    black: {
+        DEFAULT: "#000000",
+        soft: "#1a1a1a",
+        hover: "#2a2a2a",
+        text: "#121212",
+        extraLight: "#2e2e2e",
+    },
+    white: {
+        DEFAULT: "#ffffff",
+        soft: "#f9f9f9",
+        hover: "#f1f1f1",
+        text: "#eaeaea",
+        extraLight: "#fefefe",
+    },
+    red: {
+        DEFAULT: "#e53935",
+        light: "#ef5350",
+        dark: "#b71c1c",
+        hover: "#d32f2f",
+        background: "#fdecea",
+        extraLight: "#fbe0de",
+    },
+    green: {
+        DEFAULT: "#43a047",
+        light: "#66bb6a",
+        dark: "#2e7d32",
+        hover: "#388e3c",
+        background: "#eafaf1",
+        extraLight: "#dbf3e3",
+    },
+    gray: {
+        DEFAULT: "#9e9e9e",
+        light: "#eeeeee",
+        dark: "#616161",
+        soft: "#f5f5f5",
+        border: "#dcdcdc",
+        hover: "#c7c7c7",
+        text: "#4f4f4f",
+        extraLight: "#f2f2f2",
+    },
+};
