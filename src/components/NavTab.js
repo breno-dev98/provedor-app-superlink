@@ -1,5 +1,5 @@
 // NavTab.js
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -9,85 +9,80 @@ import AssignmentStack from "../routes/AssignmentStack";
 import { colors } from "../constants/colors";
 
 const Tab = createBottomTabNavigator();
-function getActiveRouteName(route) {
-    if (!route) return "";
 
-    const state = route.state ?? route;
-    const routeName = state.routes?.[state.index ?? 0];
-
-    if (routeName?.state) {
-        return getActiveRouteName(routeName);
+/* 
+ @param {object} state
+ @returns {string|null}
+ */
+function getActiveRouteName(state) {
+    if (!state || !state.routes || state.routes.length === 0) {
+        return null;
     }
 
-    return routeName?.name || "";
-}
-  
+    const route = state.routes[state.index];
 
-// Define em quais rotas a tab deve aparecer
-function getTabBarVisibility(route) {
-    const activeRouteName = getActiveRouteName(route);
-    const visibleRoutes = ["Home", "PlanosScreen"]; // telas onde a tab deve aparecer
-    return visibleRoutes.includes(activeRouteName) ? "flex" : "none";
+    if (route.state) {
+
+        return getActiveRouteName(route.state);
+    }
+
+    return route.name;
 }
-  
+
 
 const screens = [
     {
-        name: "Início",
+        name: "Inicio",
         component: HomeStack,
         icon: "home",
-        options: ({ route }) => ({
-            headerShown: false,
-            tabBarStyle: {
-                ...styles.tabBar,
-                display: getTabBarVisibility(route),
-            },
-        }),
     },
     {
         name: "Planos",
         component: AssignmentStack,
         icon: "assignment",
-        options: ({ route }) => ({
-            headerShown: false,
-            tabBarStyle: {
-                ...styles.tabBar,
-                display: getTabBarVisibility(route),
-            },
-        }),
     },
 ];
 
 export function NavTab() {
+    const [nomeRotaAtual, setNomeRotaAtual] = useState(null);
+
+    const rotasProfundasVisiveis = ["Home", "PlanosScreen"];
+
     return (
-        <NavigationContainer>
+        <NavigationContainer
+            onStateChange={(state) => {
+                const rotaAtiva = getActiveRouteName(state);
+                setNomeRotaAtual(rotaAtiva);
+            }}
+        >
             <Tab.Navigator
-                screenOptions={({ route }) => {
-                    const screen = screens.find((screen) => screen.name === route.name);
-                    return {
-                        tabBarIcon: ({ color }) => (
-                            <MaterialIcons name={screen?.icon || "question"} size={30} color={color} />
-                        ),
-                        tabBarActiveTintColor: colors.red.DEFAULT,
-                        tabBarInactiveTintColor: colors.gray.text,
-                        tabBarLabelStyle: styles.tabBarLabel,
-                    };
-                }}
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ color }) => {
+                        const screen = screens.find(s => s.name === route.name);
+                        return (
+                            <MaterialIcons
+                                name={screen?.icon || "question"}
+                                size={30}
+                                color={color}
+                            />
+                        );
+                    },
+                    tabBarActiveTintColor: colors.red.DEFAULT, 
+                    tabBarInactiveTintColor: colors.gray.text, 
+                    tabBarLabelStyle: styles.tabBarLabel,
+                    tabBarStyle: {
+                        ...styles.tabBar, 
+                        display: rotasProfundasVisiveis.includes(nomeRotaAtual) ? "flex" : "none",
+                    },
+                    headerShown: false,
+                })}
             >
-                {screens.map(({ name, component, options, icon }) => (
+                {/* Mapeia o array de telas para criar componentes Tab.Screen */}
+                {screens.map(({ name, component }) => (
                     <Tab.Screen
                         key={name}
                         name={name}
                         component={component}
-                        options={(props) => ({
-                            ...options(props),
-                            tabBarIcon: ({ color }) => (
-                                <MaterialIcons name={icon} size={30} color={color} />
-                            ),
-                            tabBarActiveTintColor: colors.red.DEFAULT,
-                            tabBarInactiveTintColor: colors.gray.text,
-                            tabBarLabelStyle: styles.tabBarLabel,
-                        })}
                     />
                 ))}
             </Tab.Navigator>
@@ -100,8 +95,15 @@ const styles = StyleSheet.create({
         height: 80,
         paddingTop: 10,
         backgroundColor: colors.white.DEFAULT,
+
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: -2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 2,
+        elevation: 5,
     },
     tabBarLabel: {
         fontSize: 12,
+        marginBottom: 5,
     },
 });

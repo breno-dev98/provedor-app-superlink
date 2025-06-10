@@ -7,6 +7,9 @@ import UserInfoScreen from "../screens/UserInfoScreen";
 import {defaultStackOptions} from "../navigation/options/defaultStackOptions"
 import NotificationsScreen from "../screens/NotificationsScreen";
 import NotificationDetailScreen from "../screens/NotificationDetailScreen";
+import MyContractsScreen from "../screens/MyContractsScreen";
+import PolicyAndPrivacyScreen from "../screens/PolicyAndPrivacyScreen";
+import AboutScreen from "../screens/AboutScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +24,9 @@ export default function HomeStack() {
 
             <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Perfil" component={Profile} />
+            <Stack.Screen name="Contratos" component={MyContractsScreen} options={{title: "Meus Contratos"}}/>
+            <Stack.Screen name="Privacidade" component={PolicyAndPrivacyScreen} options={{title: "Política e Privacidade"}}/>
+            <Stack.Screen name="Sobre" component={AboutScreen} options={{title: "Sobre"}}/>
             <Stack.Screen name="Notificacoes" component={NotificationsScreen} options={{title: "Notificações"}}/>
             <Stack.Screen name="NotificationDetail" component={NotificationDetailScreen} options={{ title: "Notificações" }} />
             <Stack.Screen name="MeusDados" component={UserInfoScreen} options={{title: "Meus Dados"}}/>
