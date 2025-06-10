@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import HomeStack from "../routes/HomeStack";
 import AssignmentStack from "../routes/AssignmentStack";
 import { colors } from "../constants/colors";
+import FinancialStack from "../routes/FinancialStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,17 +42,22 @@ const screens = [
         component: AssignmentStack,
         icon: "assignment",
     },
+    {
+        name: "Finanças",
+        component: FinancialStack,
+        icon: "attach-money",
+    },
 ];
 
 export function NavTab() {
     const [nomeRotaAtual, setNomeRotaAtual] = useState(null);
 
-    const rotasProfundasVisiveis = ["Home", "PlanosScreen"];
+    const rotasProfundasVisiveis = ["Home", "PlanosScreen", "Financial"];
 
     return (
         <NavigationContainer
             onStateChange={(state) => {
-                const rotaAtiva = getActiveRouteName(state);
+                const rotaAtiva = getActiveRouteName(state);                
                 setNomeRotaAtual(rotaAtiva);
             }}
         >
