@@ -4,9 +4,11 @@ import { Text, View, TouchableOpacity, Pressable } from "react-native";
 import { Card, Divider } from "react-native-paper";
 import { colors } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
+import { useAuth } from '../context/AuthContext';
 
 export default function Profile() {
     const navigation = useNavigation();
+    const { logout } = useAuth();
 
     const options = [
         { icon: "settings", title: "Meus dados", description: "Visualize ou edite seus dados", route: "MeusDados" },
@@ -15,6 +17,10 @@ export default function Profile() {
         { icon: "assignment", title: "Política de Privacidade", description: "Veja nossa política de privacidade", route: "Privacidade" },
         { icon: "info", title: "Sobre", description: "Sobre desenvolvimento", route: "Sobre" },
     ];
+
+    const handleLogout = () => {
+        logout(); 
+    };
 
     return (
         <View style={{ padding: 22, flex: 1, gap: 20 }}>
@@ -73,8 +79,8 @@ export default function Profile() {
                     </View>
                 ))}
             </Card>
-            <View style={{marginHorizontal: "auto"}}>
-                <Pressable onPress={() => alert("Função em desenvolvimento")}>
+            <View style={{ marginHorizontal: "auto" }}>
+                <Pressable onPress={handleLogout}>
                     <Text style={{ color: colors.red.DEFAULT, fontWeight: 500 }}>Sair</Text>
                 </Pressable>
             </View>

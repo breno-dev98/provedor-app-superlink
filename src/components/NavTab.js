@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+// Remova: import { NavigationContainer } from "@react-navigation/native"; // ESTA LINHA SERÁ REMOVIDA
 import HomeStack from "../routes/HomeStack";
 import AssignmentStack from "../routes/AssignmentStack";
 import { colors } from "../constants/colors";
@@ -11,7 +11,7 @@ import FinancialStack from "../routes/FinancialStack";
 
 const Tab = createBottomTabNavigator();
 
-/* 
+/*
  @param {object} state
  @returns {string|null}
  */
@@ -23,7 +23,6 @@ function getActiveRouteName(state) {
     const route = state.routes[state.index];
 
     if (route.state) {
-
         return getActiveRouteName(route.state);
     }
 
@@ -49,50 +48,54 @@ const screens = [
     },
 ];
 
-export function NavTab() {
+// Altere a exportação de nomeada para padrão
+export default function NavTab() { // Alterado de 'export function NavTab()'
     const [nomeRotaAtual, setNomeRotaAtual] = useState(null);
 
-    const rotasProfundasVisiveis = ["Home", "PlanosScreen", "Financial"];
+    const rotasProfundasVisiveis = ["Inicio", "PlanosScreen", "Financial"]; // Verifique os nomes das rotas Home, PlanosScreen e Financial
 
     return (
-        <NavigationContainer
-            onStateChange={(state) => {
-                const rotaAtiva = getActiveRouteName(state);                
-                setNomeRotaAtual(rotaAtiva);
-            }}
+        // Remova o NavigationContainer daqui
+        // <NavigationContainer
+        //     onStateChange={(state) => {
+        //         const rotaAtiva = getActiveRouteName(state);
+        //         setNomeRotaAtual(rotaAtiva);
+        //     }}
+        // >
+        <Tab.Navigator
+            screenOptions={({ route }) => ({
+                tabBarIcon: ({ color }) => {
+                    const screen = screens.find(s => s.name === route.name);
+                    return (
+                        <MaterialIcons
+                            name={screen?.icon || "question"}
+                            size={30}
+                            color={color}
+                        />
+                    );
+                },
+                tabBarActiveTintColor: colors.red.DEFAULT,
+                tabBarInactiveTintColor: colors.gray.text,
+                tabBarLabelStyle: styles.tabBarLabel,
+                tabBarStyle: {
+                    ...styles.tabBar,
+                    // Ajuste para garantir que a rota profunda "Home" seja 'Inicio', "PlanosScreen" seja 'Planos', etc.
+                    display: rotasProfundasVisiveis.includes(nomeRotaAtual) ? "flex" : "none",
+                },
+                headerShown: false,
+            })}
         >
-            <Tab.Navigator
-                screenOptions={({ route }) => ({
-                    tabBarIcon: ({ color }) => {
-                        const screen = screens.find(s => s.name === route.name);
-                        return (
-                            <MaterialIcons
-                                name={screen?.icon || "question"}
-                                size={30}
-                                color={color}
-                            />
-                        );
-                    },
-                    tabBarActiveTintColor: colors.red.DEFAULT, 
-                    tabBarInactiveTintColor: colors.gray.text, 
-                    tabBarLabelStyle: styles.tabBarLabel,
-                    tabBarStyle: {
-                        ...styles.tabBar, 
-                        display: rotasProfundasVisiveis.includes(nomeRotaAtual) ? "flex" : "none",
-                    },
-                    headerShown: false,
-                })}
-            >
-                {/* Mapeia o array de telas para criar componentes Tab.Screen */}
-                {screens.map(({ name, component }) => (
-                    <Tab.Screen
-                        key={name}
-                        name={name}
-                        component={component}
-                    />
-                ))}
-            </Tab.Navigator>
-        </NavigationContainer>
+            {/* Mapeia o array de telas para criar componentes Tab.Screen */}
+            {screens.map(({ name, component }) => (
+                <Tab.Screen
+                    key={name}
+                    name={name}
+                    component={component}
+                />
+            ))}
+        </Tab.Navigator>
+        // Remova o fechamento do NavigationContainer
+        // </NavigationContainer>
     );
 }
 
