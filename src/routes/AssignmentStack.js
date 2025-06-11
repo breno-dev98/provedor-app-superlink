@@ -12,7 +12,7 @@ export default function AssignmentStack() {
         <Stack.Navigator
             screenOptions={defaultStackOptions}
         >
-            <Stack.Screen name="PlanosScreen" component={AssignmentScreen} options={{ title: "Meus Planos" }} />
+            <Stack.Screen name="AssignmentScreen" component={AssignmentScreen} options={{ title: "Meus Planos" }} />
             <Stack.Screen name="ConfiguracaoWifi" component={WifiConfigurationScreen} options={{title: "Configuração de wi-fi"}}/>
 
         </Stack.Navigator>

@@ -18,11 +18,11 @@ export default function HomeStack() {
         <Stack.Navigator
             screenOptions={({ route }) => ({
                 ...defaultStackOptions,
-                headerBackground: route.name === "Home" ? undefined : defaultStackOptions.headerBackground,
+                headerBackground: route.name === "HomeScreen" ? undefined : defaultStackOptions.headerBackground,
             })}
         >
 
-            <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Perfil" component={Profile} />
             <Stack.Screen name="Contratos" component={MyContractsScreen} options={{title: "Meus Contratos"}}/>
             <Stack.Screen name="Privacidade" component={PolicyAndPrivacyScreen} options={{title: "Política e Privacidade"}}/>

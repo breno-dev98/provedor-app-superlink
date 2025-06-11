@@ -11,7 +11,7 @@ export default function FinancialStack() {
             screenOptions={defaultStackOptions}
         >
 
-            <Stack.Screen name="Financial" component={FinancialScreen} options={{ title: "Finanças" }} />
+            <Stack.Screen name="FinancialScreen" component={FinancialScreen} options={{ title: "Finanças" }} />
 
         </Stack.Navigator>
     );
