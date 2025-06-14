@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
 import { Card, TextInput } from "react-native-paper";
 import { colors } from "../constants/colors";
+import { UserContext } from "../context/UserContext";
 
 export default function UserInfoScreen() {
+    const {user} = useContext(UserContext)
     return (
         <Card style={{ padding: 20, margin: 20, backgroundColor: colors.white.DEFAULT }}>
             <View style={{ gap: 16 }}>
                 {/* Nome */}
                 <TextInput
                     label="Nome"
-                    value="Breno Oliveira Gomes"
+                    value={`${user?.firstName} ${user?.lastName}`}
                     mode="outlined"
                     disabled
                     style={{ backgroundColor: colors.white.DEFAULT }}
@@ -28,7 +30,7 @@ export default function UserInfoScreen() {
                 {/* Telefone */}
                 <TextInput
                     label="Telefone"
-                    value="(11) 91234-5678"
+                    value={user?.phone}
                     mode="outlined"
                     disabled
                     style={{ backgroundColor: colors.white.DEFAULT }}
@@ -37,7 +39,7 @@ export default function UserInfoScreen() {
                 {/* Telefone 2 */}
                 <TextInput
                     label="Telefone 2"
-                    value="(11) 99876-5432"
+                    value={user?.phone}
                     mode="outlined"
                     disabled
                     style={{ backgroundColor: colors.white.DEFAULT }}
@@ -46,7 +48,7 @@ export default function UserInfoScreen() {
                 {/* Email */}
                 <TextInput
                     label="E-mail"
-                    value="breno.gomes@email.com"
+                    value={user?.email}
                     mode="outlined"
                     disabled
                     style={{ backgroundColor: colors.white.DEFAULT }}

@@ -1,15 +1,16 @@
 import { MaterialIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext } from "react";
 import { Text, View, TouchableOpacity, Pressable } from "react-native";
 import { Card, Divider } from "react-native-paper";
 import { colors } from "../constants/colors";
 import { useNavigation } from "@react-navigation/native";
 import { useAuth } from '../context/AuthContext';
+import { UserContext, UserProvider } from "../context/UserContext";
 
 export default function Profile() {
     const navigation = useNavigation();
     const { logout } = useAuth();
-
+    const { user } = useContext(UserContext)
     const options = [
         { icon: "settings", title: "Meus dados", description: "Visualize ou edite seus dados", route: "MeusDados" },
         { icon: "notifications", title: "Minhas Notificações", description: "Acompanhe suas notificações", route: "Notificacoes" },
@@ -40,7 +41,7 @@ export default function Profile() {
                         <MaterialIcons name="person" size={40} color={colors.red.DEFAULT} />
                     </View>
                     <View>
-                        <Text style={{ fontSize: 16, fontWeight: "bold" }}>Breno Oliveira Gomes</Text>
+                        <Text style={{ fontSize: 16, fontWeight: "bold" }}>{`${user?.firstName} ${user?.lastName}`}</Text>
                         <Text>695.968.775-95</Text>
                     </View>
                 </View>

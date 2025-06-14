@@ -69,6 +69,10 @@ export default function NavTab() {
     const nomeRotaAtual = navigationState
         ? getActiveRouteName(navigationState)
         : (rotasPrincipaisVisiveis[0] || null); // Fallback para a primeira rota visível
+    
+    // --- ADICIONE ESTE CONSOLE.LOG ---
+    console.log("Nome da Rota Atual:", nomeRotaAtual, " | TabBar Visível:", rotasPrincipaisVisiveis.includes(nomeRotaAtual));
+    // --- FIM DO CONSOLE.LOG ---
 
     return (
         <Tab.Navigator
