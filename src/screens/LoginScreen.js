@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -17,13 +17,15 @@ import { MaterialIcons } from '@expo/vector-icons';
 import logo from "../../assets/logo-no-background.png";
 import { colors } from '../constants/colors';
 import { useAuth } from '../context/AuthContext'; // Importe o hook useAuth
+import { useRouter } from 'expo-router';
 
 export default function LoginScreen() {
     const [cpf, setCpf] = useState('');
     const [senha, setSenha] = useState('');
 
     // Use o hook useAuth para obter a função de login e o estado de carregamento
-    const { login, isLoading } = useAuth();
+    const { login, isLoading, userToken } = useAuth();
+    const router = useRouter();
 
     const handleLogin = () => {
         if (cpf.length === 0 || senha.length === 0) {
@@ -35,6 +37,12 @@ export default function LoginScreen() {
         // Neste caso, você usaria 'cpf' como seu identificador de usuário
         login(cpf, senha);
     };
+
+    useEffect(() => {
+        if (userToken) {
+            router.replace('/tabs/home');
+        }
+    }, [userToken]);
 
     const handlePrimeiroAcesso = () => {
         console.log('Usuário clicou em Primeiro Acesso.');

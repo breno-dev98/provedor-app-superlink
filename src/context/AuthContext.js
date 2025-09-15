@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
+import { router } from 'expo-router';
 
 import { TEST_CPF, TEST_PASSWORD } from '@env';
 
@@ -57,6 +58,7 @@ export const AuthProvider = ({ children }) => {
             setUserToken(null);
             setUserInfo(null);
             Alert.alert('Sucesso', 'Logout realizado com sucesso!');
+            router.replace('/login');
         } catch (error) {
             console.error('Erro de logout:', error);
             Alert.alert('Erro', 'Ocorreu um erro ao fazer logout.');
